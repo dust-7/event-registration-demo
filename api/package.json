@@ -8,8 +8,11 @@
     "start": "node dist/app.js"
   },
   "dependencies": {
+    "dotenv": "^18.0.7",
     "express": "^5.3.0",
     "express-winston": "^4.2.0",
+    "mysql2": "^3.24.5",
+    "sequelize": "^6.37.8",
     "winston": "^3.19.0"
   },
   "devDependencies": {
