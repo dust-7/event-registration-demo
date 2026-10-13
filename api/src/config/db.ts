@@ -1,12 +1,10 @@
 import { Sequelize } from 'sequelize';
-import dotenv from 'dotenv';
 
 import { logger } from '../utils/logger.js';
 
-dotenv.config();
-
 if (!process.env.DB_NAME || !process.env.DB_USER) {
-  throw new Error('Following environment variables are required in .env: DB_NAME, DB_USER');
+  logger.error('DB_NAME and DB_USER must be set');
+  throw new Error();
 }
 
 const sequelize = new Sequelize(
@@ -18,6 +16,9 @@ const sequelize = new Sequelize(
     port: parseInt(process.env.DB_PORT ?? '3306'),
     dialect: 'mysql',
     logging: (msg: string) => logger.info(msg),
+    define: {
+      underscored: true,
+    },
   }
 );
 

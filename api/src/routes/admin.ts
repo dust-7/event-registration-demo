@@ -1,10 +1,11 @@
-import { Router, type Request, type Response, type NextFunction } from 'express';
+import { Router } from 'express';
+import adminController from '../controllers/adminController.js';
 
-const router: Router = Router();
+const router = Router();
 
-/* GET users listing. */
-router.get('/', (_req: Request, res: Response, _next: NextFunction) => {
-  res.send('respond with an admin resource');
-});
+router.get('/employees', adminController.getEmployees);
+router.get('/events', adminController.getEvents);
+router.post('/events', adminController.createEvent);
+router.post('/events/:uuid/trend', adminController.getEventRegistrationTrend);
 
 export default router;

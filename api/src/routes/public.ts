@@ -1,10 +1,9 @@
-import { Router, type Request, type Response, type NextFunction } from 'express';
+import { Router } from 'express';
+import publicController from '../controllers/publicController.js';
 
-const router: Router = Router();
+const router = Router();
 
-/* GET users listing. */
-router.get('/', (_req: Request, res: Response, _next: NextFunction) => {
-  res.send('respond with a public resource');
-});
+router.get('/events', publicController.getEvents);
+router.post('/register', publicController.register);
 
 export default router;

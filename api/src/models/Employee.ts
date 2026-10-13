@@ -5,8 +5,8 @@ class Employee extends Model<InferAttributes<Employee>, InferCreationAttributes<
   declare uuid: CreationOptional<string>;
   declare name: string;
   
-  declare created_at: CreationOptional<Date>;
-  declare updated_at: CreationOptional<Date>;
+  declare createdAt: CreationOptional<Date>;
+  declare updatedAt: CreationOptional<Date>;
 }
 
 Employee.init(
@@ -20,14 +20,12 @@ Employee.init(
       type: DataTypes.STRING(255),
       allowNull: false,
     },
-    created_at: DataTypes.DATE,
-    updated_at: DataTypes.DATE,
+    createdAt: DataTypes.DATE,
+    updatedAt: DataTypes.DATE,
   },
   {
     sequelize,
     tableName: 'employees',
-    createdAt: 'created_at',
-    updatedAt: 'updated_at',
   }
 );
 

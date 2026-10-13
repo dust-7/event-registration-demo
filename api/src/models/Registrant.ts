@@ -1,18 +1,19 @@
 import { Model, DataTypes, type InferAttributes, type InferCreationAttributes, type CreationOptional } from 'sequelize';
 import sequelize from '../config/db.js';
+import Event from './Event.js';
 
 class Registrant extends Model<InferAttributes<Registrant>, InferCreationAttributes<Registrant>> {
-  declare event_uuid: string;
-  declare email_address: string;
-  declare registration_no: CreationOptional<number>;
+  declare eventUuid: string;
+  declare emailAddress: string;
+  declare registrationNo: CreationOptional<number>;
   
-  declare created_at: CreationOptional<Date>;
-  declare updated_at: CreationOptional<Date>;
+  declare createdAt: CreationOptional<Date>;
+  declare updatedAt: CreationOptional<Date>;
 }
 
 Registrant.init(
   {
-    event_uuid: {
+    eventUuid: {
       type: DataTypes.CHAR(36),
       primaryKey: true,
       allowNull: false,
@@ -21,32 +22,36 @@ Registrant.init(
         key: 'uuid',
       },
     },
-    email_address: {
+    emailAddress: {
       type: DataTypes.STRING(255),
       allowNull: false,
     },
-    registration_no: {
+    registrationNo: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       allowNull: false,
     },
-    created_at: DataTypes.DATE,
-    updated_at: DataTypes.DATE,
+    createdAt: DataTypes.DATE,
+    updatedAt: DataTypes.DATE,
   },
   {
     sequelize,
     tableName: 'registrants',
-    createdAt: 'created_at',
-    updatedAt: 'updated_at',
   }
 );
 
 Registrant.addHook('beforeValidate', async (registrant: Registrant) => {
   // autogenerate registration_no
-  const maxNo = await Registrant.max<number, Registrant>('registration_no', {
-    where: { event_uuid: registrant.event_uuid },
+  const maxNo = await Registrant.max<number, Registrant>('registrationNo', {
+    where: { eventUuid: registrant.eventUuid },
   });
-  registrant.registration_no = (maxNo ?? 0) + 1;
+  registrant.registrationNo = (maxNo ?? 0) + 1;
+});
+
+Registrant.addHook('afterCreate', async (registrant: Registrant) => {
+  await Event.increment('registrationCount', {
+    where: { uuid: registrant.eventUuid },
+  });
 });
 
 export default Registrant;

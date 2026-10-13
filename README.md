@@ -8,25 +8,35 @@ This is a demo system for a Software Engineering assignment.
 - *Instructions for running the system locally.*
 - *Instructions for running unit tests locally.*
 
-### Setting Up Database
+### Database
 
-1. Create a MySQL database. One method is to run the following command in MySQL CLI:
+Create a MySQL database. One method is to run the following command in MySQL CLI:
 
-   ```
-   CREATE DATABASE database_name;
-   ```
+```
+CREATE DATABASE database_name;
+```
 
-2. Create a `.env` file at the path `api/.env` with the following variables:
+### .env File
 
-   ```
-   DB_NAME=database_name
-   DB_USER=root
-   DB_PASSWORD=
-   DB_HOST=localhost
-   DB_PORT=3306
-   ```
+Create a `.env` file at the path `api/.env` with the following variables:
 
-   Only `DB_NAME` and `DB_USER` are mandatory. `DB_HOST` defaults to `localhost` and `DB_PORT` defaults to `3306`.
+```
+DB_NAME=database_name
+DB_USER=root
+DB_PASSWORD=
+DB_HOST=localhost
+DB_PORT=3306
+ONEMAP_EMAIL=
+ONEMAP_EMAIL_PASSWORD=
+ONEMAP_BASE_URL=https://www.onemap.gov.sg/api
+```
+
+At minimum, update the following variables with your own values:
+- DB_NAME
+- DB_USER
+- DB_PASSWORD
+- ONEMAP_EMAIL
+- ONEMAP_EMAIL_PASSWORD
 
 ### Seed Data
 

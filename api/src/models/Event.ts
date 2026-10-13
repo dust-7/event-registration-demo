@@ -1,17 +1,20 @@
 import { Model, DataTypes, type InferAttributes, type InferCreationAttributes, type CreationOptional } from 'sequelize';
 import sequelize from '../config/db.js';
+import Employee from './Employee.js';
 
 class Event extends Model<InferAttributes<Event>, InferCreationAttributes<Event>> {
   declare uuid: CreationOptional<string>;
   declare name: string;
-  declare date_time: Date;
+  declare dateTime: Date;
   declare address: string;
   declare deadline: Date;
   declare capacity: number;
-  declare handler_uuid: string;
+  declare registrationCount: CreationOptional<number>;
+  declare handlerUuid: string;
+  declare handler?: Employee;
   
-  declare created_at: CreationOptional<Date>;
-  declare updated_at: CreationOptional<Date>;
+  declare createdAt: CreationOptional<Date>;
+  declare updatedAt: CreationOptional<Date>;
 }
 
 Event.init(
@@ -26,7 +29,7 @@ Event.init(
       allowNull: false,
       unique: true,
     },
-    date_time: {
+    dateTime: {
       type: DataTypes.DATE,
       allowNull: false,
     },
@@ -42,7 +45,11 @@ Event.init(
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    handler_uuid: {
+    registrationCount: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0,
+    },
+    handlerUuid: {
       type: DataTypes.CHAR(36),
       allowNull: false,
       references: {
@@ -50,14 +57,12 @@ Event.init(
         key: 'uuid',
       },
     },
-    created_at: DataTypes.DATE,
-    updated_at: DataTypes.DATE,
+    createdAt: DataTypes.DATE,
+    updatedAt: DataTypes.DATE,
   },
   {
     sequelize,
     tableName: 'events',
-    createdAt: 'created_at',
-    updatedAt: 'updated_at',
   }
 );
 
