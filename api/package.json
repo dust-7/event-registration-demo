@@ -4,6 +4,8 @@
   "version": "0.0.0",
   "scripts": {
     "dev": "tsx --env-file=.env --watch src/app.ts",
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
+    "test:coverage": "node --experimental-vm-modules node_modules/jest/bin/jest.js --coverage",
     "build": "tsc",
     "start": "node --env-file=.env dist/app.js"
   },
@@ -18,7 +20,10 @@
   "devDependencies": {
     "@types/express": "^5.0.6",
     "@types/express-winston": "^3.0.4",
+    "@types/jest": "^30.0.0",
     "@types/node": "^26.6.5",
+    "jest": "^30.5.2",
+    "ts-jest": "^29.4.14",
     "tsx": "^4.23.15",
     "typescript": "^6.0.3"
   }
