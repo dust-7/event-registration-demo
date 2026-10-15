@@ -1,10 +1,23 @@
-import { Outlet } from 'react-router-dom';
-import { Box } from '@mui/material';
+import { Outlet, Link, useLocation } from 'react-router-dom';
+import { Box, AppBar, Toolbar, Typography, Button } from '@mui/material';
 
 export default function RootLayout() {
+  const location = useLocation();
+
   return (
-    <Box sx={{ minHeight: '100svh', display: 'flex', flexDirection: 'column' }}>
+    <>
+      <AppBar position="sticky" sx={{ backgroundColor: 'white' }}>
+        <Toolbar>
+          <Typography variant="h6" component={Link} to="/" sx={{ textDecoration: 'none', color: 'grey.900', fontWeight: 'bold' }}>
+            Event Company
+          </Typography>
+          <Box sx={{ flexGrow: 1 }} />
+          {location.pathname !== '/admin' && (
+            <Button component={Link} to="/admin" variant="contained" color="warning">Admin</Button>
+          )}
+        </Toolbar>
+      </AppBar>
       <Outlet />
-    </Box>
+    </>
   );
 }
