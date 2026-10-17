@@ -1,4 +1,4 @@
-import { Button, Typography } from '@mui/material';
+import { Alert, AlertTitle, Button } from '@mui/material';
 
 interface RegistrationFailureProps {
   errors: string[];
@@ -8,16 +8,16 @@ interface RegistrationFailureProps {
 export default function RegistrationFailure({ errors, onRestart }: RegistrationFailureProps) {
   return (
     <>
-      <Typography sx={{ mt: 3, color: 'error.main', fontWeight: 'bold', fontSize: '1.1rem' }}>
-        Error
-      </Typography>
-      {errors.map((detail, i) => (
-        <Typography key={i} sx={{ color: 'error.main', mt: 0.5 }}>
-          - {detail}
-        </Typography>
-      ))}
+      <Alert severity="error">
+        <AlertTitle>Error</AlertTitle>
+        <ul>
+          {errors.map((detail, i) => (
+            <li key={i}>{detail}</li>
+          ))}
+        </ul>
+      </Alert>
       <Button variant="contained" fullWidth sx={{ mt: 3 }} onClick={onRestart}>
-        Try again
+        Go back
       </Button>
     </>
   );

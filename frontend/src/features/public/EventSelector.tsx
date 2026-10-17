@@ -1,4 +1,4 @@
-import { LinearProgress, MenuItem, Select, Typography } from '@mui/material';
+import { Alert, LinearProgress, MenuItem, Select, Typography } from '@mui/material';
 import type { PublicEventDto } from '../../services/eventService';
 
 interface Props {
@@ -17,9 +17,7 @@ export default function EventSelector({ events, loading, error, selectedUuid, on
       </Typography>
       {loading && <LinearProgress sx={{ mt: 2 }} />}
       {error && (
-        <Typography sx={{ mt: 2, color: 'error.main', fontWeight: 'bold' }}>
-          Could not fetch events, try again later.
-        </Typography>
+        <Alert severity="error">Could not fetch events, try again later.</Alert>
       )}
       {!loading && !error && (
         <Select

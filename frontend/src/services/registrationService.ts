@@ -10,23 +10,39 @@ interface RegisterResponse {
   registrationNo: string;
 }
 
-interface RegisterError {
-  error: string;
-  details: string[];
+export interface RegistrationTrendEntry {
+  date: string;
+  registrationCount: number;
+  newRegistrationCount: number;
 }
 
 export const registrationService = {
   register: async (payload: RegisterPayload): Promise<Result<RegisterResponse>> => {
     try {
-      const { status, data } = await client.post('/public/register', payload);
-      if (status === 200) {
-        return { success: true, data: data as RegisterResponse };
-      }
-      if (status === 421 && data && typeof data === 'object') {
-        return { success: false, error: (data as RegisterError).error, details: (data as RegisterError).details };
+      const { data } = await client.post('/public/register', payload);
+      return { success: true, data: data as RegisterResponse };
+    } catch (error) {
+      if (error && typeof error === 'object' && 'response' in error) {
+        const responseData = (error as any).response?.data;
+        if (responseData && typeof responseData === 'object') {
+          return { success: false, error: (responseData as any).error, details: (responseData as any).details };
+        }
       }
       return { success: false };
-    } catch {
+    }
+  },
+
+  getRegistrationTrend: async (eventUuid: string): Promise<Result<RegistrationTrendEntry[]>> => {
+    try {
+      const { data } = await client.post(`/admin/events/${eventUuid}/trend`, {});
+      return { success: true, data: data as RegistrationTrendEntry[] };
+    } catch (error) {
+      if (error && typeof error === 'object' && 'response' in error) {
+        const responseData = (error as any).response?.data;
+        if (responseData && typeof responseData === 'object') {
+          return { success: false, error: (responseData as any).error, details: (responseData as any).details };
+        }
+      }
       return { success: false };
     }
   },

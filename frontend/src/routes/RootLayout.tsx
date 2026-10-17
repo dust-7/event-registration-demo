@@ -8,7 +8,7 @@ export default function RootLayout() {
     <>
       <AppBar position="sticky" sx={{ backgroundColor: 'white' }}>
         <Toolbar>
-          <Typography variant="h6" component={Link} to="/" sx={{ textDecoration: 'none', color: 'grey.900', fontWeight: 'bold' }}>
+          <Typography variant="h6" component="a" href="/" sx={{ textDecoration: 'none', color: 'grey.900', fontWeight: 'bold' }}>
             Event Company
           </Typography>
           <Box sx={{ flexGrow: 1 }} />
